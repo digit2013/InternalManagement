@@ -25,7 +25,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-8">{{ isset($announce) ? "Edit Annoucement" : "Create Annoucement" }}</div>
-                            <div class="col-md-4" align="right"><a href="{{url('/Annoucements')}}">Go Listing</a></div>
+                            <div class="col-md-4" align="right"><a href="{{url('/annoucements')}}">Go Listing</a></div>
                         </div>
                     </div>
                     <div class="card-body ">
@@ -40,7 +40,7 @@
                         @endif
                         <form id="itemFrom" role="form" method="POST" action="{{ isset($announce) ? route('annoucement.update',$announce->id) : route('annoucement.create') }}">
                             @csrf
-                            @isset($depts)
+                            @isset($announce)
                             @method('PUT')
                             @endisset
                             <div class="form-group">
