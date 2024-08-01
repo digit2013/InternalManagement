@@ -1,7 +1,7 @@
 @extends('layout.main')
-@section('title', 'Role List')
+@section('title', 'Branch List')
 @section('content')
-@section('selected', 'roles')
+@section('selected', 'branchs')
 
 <section class="content-header">
     <div class="container-fluid">

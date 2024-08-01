@@ -8,22 +8,14 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 
-class Branch extends Model
+class ProductImage extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $table = 'branchs';
+    protected $table = 'product_images';
 
     protected $fillable = [
-        'h_id',
-        'name',
-        'location',
-        'description',
-        'status'
+        'p_id',
+        'image'
     ];
 }

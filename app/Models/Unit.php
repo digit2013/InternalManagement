@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 
-class Branch extends Model
+class Unit extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -17,13 +17,13 @@ class Branch extends Model
      *
      * @var array<int, string>
      */
-    protected $table = 'branchs';
+    protected $table = 'units';
 
     protected $fillable = [
-        'h_id',
+        'id',
         'name',
-        'location',
         'description',
+        'actual',
         'status'
     ];
 }

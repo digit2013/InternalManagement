@@ -77,7 +77,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputInformation" class="form-label">Department Name </label>
+                                    <label for="inputInformation" class="form-label">Annoucement Detail </label>
                                     <textarea id="information" name="information" text={!! $announce->information ?? ''!!}                                        ></textarea>
     
                                     @error('information')

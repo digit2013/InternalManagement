@@ -26,6 +26,9 @@ Route::get('/hos', [App\Http\Controllers\SetupController::class, 'getOffices']);
 Route::get('/depts', [App\Http\Controllers\SetupController::class, 'getDepts']);
 Route::get('/branchs', [App\Http\Controllers\SetupController::class, 'getBranchs']);
 Route::get('/annoucements', [App\Http\Controllers\AnnoucementController::class, 'getAnnoucements']);
+Route::get('/categories', [App\Http\Controllers\ProductController::class, 'getCategories']);
+Route::get('/productlist', [App\Http\Controllers\ProductController::class, 'getProducts']);
+Route::get('/units', [App\Http\Controllers\ProductController::class, 'getUnits']);
 
 Route::get('/role', [App\Http\Controllers\SetupController::class, 'getRole']);
 Route::get('/role/{id}', [App\Http\Controllers\SetupController::class, 'getRoleById'])->name('role.edit');
@@ -64,6 +67,28 @@ Route::get('/annoucement', [App\Http\Controllers\AnnoucementController::class, '
 Route::get('/annoucement/{id}', [App\Http\Controllers\AnnoucementController::class, 'getAnnoucementById'])->name('annoucement.edit');
 Route::post('/annoucement-new',  [App\Http\Controllers\AnnoucementController::class, 'saveAnnoucement'])->name('annoucement.create');
 Route::put('/annoucement/{id}', [App\Http\Controllers\AnnoucementController::class, 'saveAnnoucement'])->name('annoucement.update');
+
+Route::get('/category', [App\Http\Controllers\ProductController::class, 'getCategory']);
+Route::get('/category/{id}', [App\Http\Controllers\ProductController::class, 'getCategoryById'])->name('category.edit');
+Route::post('/category-new',  [App\Http\Controllers\ProductController::class, 'saveCategory'])->name('category.create');
+Route::put('/category/{id}', [App\Http\Controllers\ProductController::class, 'saveCategory'])->name('category.update');
+
+
+Route::get('/unit', [App\Http\Controllers\ProductController::class, 'getUnit']);
+Route::get('/unit/{id}', [App\Http\Controllers\ProductController::class, 'getUnitById'])->name('unit.edit');
+Route::post('/unit-new',  [App\Http\Controllers\ProductController::class, 'saveUnit'])->name('unit.create');
+Route::put('/unit/{id}', [App\Http\Controllers\ProductController::class, 'saveUnit'])->name('unit.update');
+
+
+
+Route::get('/product', [App\Http\Controllers\ProductController::class, 'getProduct']);
+Route::get('/product/{id}', [App\Http\Controllers\ProductController::class, 'getProductById'])->name('product.edit');
+Route::post('/product-new',  [App\Http\Controllers\ProductController::class, 'saveProduct'])->name('product.create');
+Route::put('/product/{id}', [App\Http\Controllers\ProductController::class, 'saveProduct'])->name('product.update');
+
+Route::get('/product-images/{id}',  [App\Http\Controllers\ProductController::class, 'showProductImages'])->name('images.show');
+Route::get('product-image/{productImageId}/delete', [App\Http\Controllers\ProductController::class, 'destroy']);
+Route::post('products/{productId}/upload', [App\Http\Controllers\ProductController::class, 'imageStore']);
 
 
 Route::post('api/fetch-branchs', [App\Http\Controllers\SetupController::class, 'fetchBranchs']);

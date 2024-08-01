@@ -1,18 +1,18 @@
 @extends('layout.main')
-@section('title', 'Head Office List')
+@section('title', 'Unit List')
 @section('content')
-@section('selected', 'hos')
+@section('selected', 'units')
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Head Office List</h1>
+                <h1>Unit List</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item">Home</li>
-                    <li class="breadcrumb-item active">Head Office List</li>
+                    <li class="breadcrumb-item active">Unit List</li>
                 </ol>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-md-12"><a href="{{ url('/ho') }}" class="btn btn-info float-left me-5">Add New Head Office</a></div>
+                            <div class="col-md-12"><a href="{{ url('/unit') }}" class="btn btn-info float-left me-5">Add New Unit</a></div>
                         </div>
                     </div>
                     {{-- @if(session()->has('message')) --}}
@@ -41,8 +41,8 @@
                                     <th class="col-md-1" scope="col">Id</th>
 
                                     <th class="col-md-1" scope="col">Name</th>
-                            <th class="col-md-2" scope="col">Location</th>
                             <th class="col-md-2" scope="col">Description</th>
+                            <th class="col-md-2" scope="col">Actual Count</th>
                             <th class="col-md-2" scope="col">Created Date</th>
                             <th class="col-md-1" scope="col"> Status</th>
                             <th class="col-md-4" scope="col" colspan="4" class="text-center">Action
@@ -51,31 +51,31 @@
                             </thead>
                             <tbody>
                                 <!-- @php($i = 1) -->
-                                @if ($hos->total() != 0)
-                                @foreach ($hos as $ho)
+                                @if ($units->total() != 0)
+                                @foreach ($units as $unit)
                                 <tr>
-                                <td> {{$ho->id }} </td>
+                                <td> {{$unit->id }} </td>
 
-                                    <td class="text-left"> {{ $ho->name }} </td>
-                                    <td class="text-left"> {{ $ho->location }} </td>
-                                    <td class="text-left"> {{ $ho->description }} </td>
+                                    <td class="text-left"> {{ $unit->name }} </td>
+                                    <td class="text-left"> {{ $unit->description }} </td>
+                                    <td class="text-left"> {{ $unit->actual }} </td>
                                     <td class="text-left">
-                                        @if ($ho->created_at == null)
+                                        @if ($unit->created_at == null)
                                         <span class="text-danger"> No Date Set</span>
                                         @else
-                                        {{ Carbon\Carbon::parse($ho->created_at)->format('Y/m/d') }}
+                                        {{ Carbon\Carbon::parse($unit->created_at)->format('Y/m/d') }}
                                         @endif
                                     </td>
                                  
                                     <td class="text-left">
-                                        @if($ho->status == 1)
+                                        @if($unit->status == 1)
                                         <span class="bg-success p-1">Active</span>
-                                        @elseif($ho->status == 4)
+                                        @elseif($unit->status == 4)
                                         <span class="bg-danger  p-1">De-Active</span>
                                         @endif
                                     </td>
                                     <td class="text-left">
-                                        <a href="{{ route('ho.edit', ['id' => $ho->id]) }}" class="btn btn-info">Edit</a>
+                                        <a href="{{ route('unit.edit', ['id' => $unit->id]) }}" class="btn btn-info">Edit</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -88,13 +88,13 @@
                         </table>
                     </div>
                 </div>
-                @if ($hos->total() != 0)
+                @if ($units->total() != 0)
                 <div class="row dflex">
                     <div class="col-md-4 float-right">
-                        {{ $hos->lastItem() }} of total {{ $hos->total() }}
+                        {{ $units->lastItem() }} of total {{ $units->total() }}
                     </div>
                     <div class="col-md-6 float-left">
-                        {{ $hos->links() }}
+                        {{ $units->links() }}
                     </div>
                 </div>
                 @endif

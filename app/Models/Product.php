@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 
-class Branch extends Model
+class Product extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -17,12 +17,14 @@ class Branch extends Model
      *
      * @var array<int, string>
      */
-    protected $table = 'branchs';
+    protected $table = 'products';
 
     protected $fillable = [
-        'h_id',
+        'id',
+        'c_id',
+        'u_id',
+        'price',
         'name',
-        'location',
         'description',
         'status'
     ];

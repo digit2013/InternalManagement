@@ -22,7 +22,7 @@ class Department extends Model
         'b_id',
         'name',
         'location',
-        'Description',
+        'description',
         'status'
     ];
 }

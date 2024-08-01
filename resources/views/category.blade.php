@@ -6,12 +6,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>New Head Office</h1>
+                <h1>New Category</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item">Home</li>
-                    <li class="breadcrumb-item active">New Head Office</li>
+                    <li class="breadcrumb-item active">New Category</li>
                 </ol>
             </div>
         </div>
@@ -24,8 +24,8 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-md-8">{{ isset($ho) ? "Edit Head Office" : "Create Head Office" }}</div>
-                            <div class="col-md-4" align="right"><a href="{{url('/hos')}}">Go Listing</a></div>
+                            <div class="col-md-8">{{ isset($category) ? "Edit Category" : "Create Category" }}</div>
+                            <div class="col-md-4" align="right"><a href="{{url('/categories')}}">Go Listing</a></div>
                         </div>
                     </div>
                     <div class="card-body ">
@@ -38,15 +38,16 @@
                         </div>
                     
                         @endif
-                        <form id="itemFrom" role="form" method="POST" action="{{ isset($ho) ? route('ho.update',$ho->id) : route('ho.create') }}">
+                        <form id="itemFrom" role="form" method="POST" action="{{ isset($category) ? route('category.update',$category->id) : route('category.create') }}">
                             @csrf
-                            @isset($ho)
+                            @isset($category)
+                            @method('PUT')
                             @endisset
 
 
                             <div class="form-group">
-                                <label for="inputAddress" class="form-label">Head Office Name </label>
-                                <input type="text" class="form-control col-md-12" id="name" name="name" value="{{ $ho->name ?? '' }}">
+                                <label for="inputAddress" class="form-label">Category Name </label>
+                                <input type="text" class="form-control col-md-12" id="name" name="name" value="{{ $category->name ?? '' }}">
 
 
                                 @error('name')
@@ -54,17 +55,8 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="inputAddress" class="form-label">Head Office Location </label>
-                                <input type="text" class="form-control col-md-12" id="location" name="location" value="{{ $ho->location ?? '' }}">
-
-
-                                @error('location')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
                                 <label for="inputAddress" class="form-label">Description</label>
-                                <input type="text" class="form-control col-md-12" id="description" name="description" value="{{ $ho->description ?? '' }}">
+                                <input type="text" class="form-control col-md-12" id="description" name="description" value="{{ $category->description ?? '' }}">
 
 
                                 @error('description')
@@ -73,7 +65,7 @@
                             </div>
                             <div class="text-center mt-3">
                                 <button type="submit" class="btn btn-primary">
-                                    @isset($ho)
+                                    @isset($category)
                                     <i class="fas fa-arrow-circle-up"></i>
                                     <span>Update</span>
                                     @else

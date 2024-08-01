@@ -179,21 +179,21 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/categories" class="nav-link">
                   <i class="fa fa-list-alt nav-icon"></i>
                   <p>Category</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/units" class="nav-link">
                   <i class="fa fa-circle nav-icon"></i>
                   <p>Unit Measure</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/productlist" class="nav-link">
                   <i class="fa fa-indent nav-icon"></i>
-                  <p>Item</p>
+                  <p>Product</p>
                 </a>
               </li>
             
