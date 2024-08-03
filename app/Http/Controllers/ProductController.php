@@ -310,7 +310,7 @@ class ProductController extends Controller
                     $extension = $file->getClientOriginalExtension();
                     $filename = $key.'-'.time(). '.' .$extension;
     
-                    $path = "uploads/products/";
+                    $path =  "uploads/products/";
     
                     $file->move($path, $filename);
     
