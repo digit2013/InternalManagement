@@ -29,11 +29,10 @@
                             <div class="col-md-12"><a href="{{ url('/annoucement') }}" class="btn btn-info float-left me-5">Add New Annoucement</a></div>
                         </div>
                     </div>
-                    {{-- @if(session()->has('message')) --}}
-                        {{-- <div class="alert alert-success">
+                     @if(session()->has('message')) 
+                       <div class="alert alert-success">
                             {{ session()->get('message') }}
-                        </div> --}}
-                        {{-- @endif --}}
+                        </div>- @endif 
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover" id="tbl">
                                 <thead>
@@ -75,13 +74,31 @@
                                     </td>
                                     <td class="text-left">
                                         @if($announce->status == 1)
-                                        <span class="bg-success p-1">Active</span>
+                                        <span class="badge badge-success">Active</span>
                                         @elseif($announce->status == 4)
-                                        <span class="bg-danger  p-1">De-Active</span>
+                                        <span class="badge badge-danger">De-Active</span>
                                         @endif
                                     </td>
                                     <td class="text-left">
                                         <a href="{{ route('annoucement.edit', ['id' => $announce->id]) }}" class="btn btn-info">Edit</a>
+                                    </td>
+                                    <td class="text-left">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-danger">Action</button>
+                                            <button type="button" class="btn btn-danger dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                              <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <div class="dropdown-menu" role="menu" style="">
+                                                @if($announce->status == 1)
+                                              <a href="{{ route('annoucement.status', ['id' => $announce->id,'status' => 4]) }}" class="dropdown-item">De-Active</a>
+                                                @else
+                                                <a href="{{ route('annoucement.status', ['id' => $announce->id,'status' => 1]) }}" class="dropdown-item">Active</a>
+
+                                                @endif
+                                              <a href="{{ route('annoucement.edit', ['id' => $announce->id]) }}" class="dropdown-item">Edit</a>
+                                            </div>
+                                          </div>
+
                                     </td>
                                 </tr>
                                 <tr class="expandable-body">

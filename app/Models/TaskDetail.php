@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class TaskDetail extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -17,11 +17,18 @@ class Category extends Model
      *
      * @var array<int, string>
      */
-    protected $table = 'files';
+    protected $table = 'task_details';
 
     protected $fillable = [
         'id',
-        'path',
+        't_id',
+        'name',
+        'description',
+        'u_id',
+        'assign_start_date',
+        'assign_end_date',
+        'finish_start_date',
+        'finish_end_date',
         'status'
     ];
 }

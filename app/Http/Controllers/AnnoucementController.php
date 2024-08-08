@@ -141,7 +141,27 @@ class AnnoucementController extends Controller
                 }
         }
     }
+    public function updateAnnoucementStatus(Request $request){
+        try{
+                        Annoucement::find($request->id)->update([
+                                'updated_at' => Carbon::now(),
+                                'status' => $request->status
+                        ]);
+             
+             
+                return back()->with('message', 'Announcement Status Update Successfully!');
 
+        }                                        
+        catch (ConnectionException $ex) {
+                Log::error($ex);
+                return back()->with('message', 'Bad Request!');
+        } catch (Exception $ex) {
+                Log::error($ex);
+                return back()->with('message', 'Internal Server Error!');
+        } catch (PDOException $e) {
+                return back()->with('message', 'Database Server Error!');
+        }
+}
     public function fetchAnnoucements(){
         $announces = DB::table('annoucements')->whereRaw("find_in_set((".session('user')->d_id."),destination) and now() between startDate and endDate and status = 1")->get();
         return response()->json($announces);

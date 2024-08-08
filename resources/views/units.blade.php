@@ -94,7 +94,14 @@
                         {{ $units->lastItem() }} of total {{ $units->total() }}
                     </div>
                     <div class="col-md-6 float-left">
-                        {{ $units->links() }}
+                        <ul class="pagination pagination-md ">
+                          @if ($units->hasMorePages())
+                              <a href="{{ $units->nextPageUrl() }}" class="btn btn-default m-1 p-2">Next</a>
+                          @endif
+                          @if($units->currentPage() > 1)
+                              <a href="{{ $units->previousPageUrl() }}" class="btn btn-default m-1 p-2">Prev</a>
+                          @endif
+                        </ul>
                     </div>
                 </div>
                 @endif

@@ -101,7 +101,14 @@
                         {{ $roles->lastItem() }} of total {{ $roles->total() }}
                     </div>
                     <div class="col-md-6 float-left">
-                        {{ $roles->links() }}
+                        <ul class="pagination pagination-md ">
+                          @if ($roles->hasMorePages())
+                              <a href="{{ $roles->nextPageUrl() }}" class="btn btn-default m-1 p-2">Next</a>
+                          @endif
+                          @if($roles->currentPage() > 1)
+                              <a href="{{ $roles->previousPageUrl() }}" class="btn btn-default m-1 p-2">Prev</a>
+                          @endif
+                        </ul>
                     </div>
                 </div>
                 @endif

@@ -92,7 +92,14 @@
                         {{ $categories->lastItem() }} of total {{ $categories->total() }}
                     </div>
                     <div class="col-md-6 float-left">
-                        {{ $categories->links() }}
+                        <ul class="pagination pagination-md ">
+                          @if ($categories->hasMorePages())
+                              <a href="{{ $categories->nextPageUrl() }}" class="btn btn-default m-1 p-2">Next</a>
+                          @endif
+                          @if($categories->currentPage() > 1)
+                              <a href="{{ $categories->previousPageUrl() }}" class="btn btn-default m-1 p-2">Prev</a>
+                          @endif
+                        </ul>
                     </div>
                 </div>
                 @endif

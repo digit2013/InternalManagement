@@ -26,7 +26,9 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
+                            @if(session('isAdmin') == 1)
                             <div class="col-md-12"><a href="{{ url('/ho') }}" class="btn btn-info float-left me-5">Add New Head Office</a></div>
+                            @endif
                         </div>
                     </div>
                     {{-- @if(session()->has('message')) --}}
@@ -45,8 +47,11 @@
                             <th class="col-md-2" scope="col">Description</th>
                             <th class="col-md-2" scope="col">Created Date</th>
                             <th class="col-md-1" scope="col"> Status</th>
+                            @if(session('isAdmin') == 1)
+
                             <th class="col-md-4" scope="col" colspan="4" class="text-center">Action
                             </th>
+                            @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -74,9 +79,11 @@
                                         <span class="bg-danger  p-1">De-Active</span>
                                         @endif
                                     </td>
-                                    <td class="text-left">
-                                        <a href="{{ route('ho.edit', ['id' => $ho->id]) }}" class="btn btn-info">Edit</a>
+                                    @if(session('isAdmin') == 1)
+                                    <td class="text-left" >
+                                        <a href="{{ route('ho.edit', ['id' => $ho->id]) }}" class="btn btn-info" >Edit</a>
                                     </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                                 @else
@@ -94,7 +101,14 @@
                         {{ $hos->lastItem() }} of total {{ $hos->total() }}
                     </div>
                     <div class="col-md-6 float-left">
-                        {{ $hos->links() }}
+                        <ul class="pagination pagination-md ">
+                          @if ($hos->hasMorePages())
+                              <a href="{{ $hos->nextPageUrl() }}" class="btn btn-default m-1 p-2">Next</a>
+                          @endif
+                          @if($hos->currentPage() > 1)
+                              <a href="{{ $hos->previousPageUrl() }}" class="btn btn-default m-1 p-2">Prev</a>
+                          @endif
+                        </ul>
                     </div>
                 </div>
                 @endif

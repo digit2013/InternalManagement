@@ -26,7 +26,10 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
+                            @if(session('isAdmin') == 1)
+
                             <div class="col-md-12"><a href="{{ url('/dept') }}" class="btn btn-info float-left me-5">Add New Department</a></div>
+                            @endif
                         </div>
                     </div>
                     {{-- @if(session()->has('message')) --}}
@@ -79,9 +82,12 @@
                                         <span class="bg-danger  p-1">De-Active</span>
                                         @endif
                                     </td>
+                                    @if(session('isAdmin') == 1)
+
                                     <td class="text-left">
                                         <a href="{{ route('dept.edit', ['id' => $dept->id]) }}" class="btn btn-info">Edit</a>
                                     </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                                 @else
@@ -99,7 +105,16 @@
                         {{ $depts->lastItem() }} of total {{ $depts->total() }}
                     </div>
                     <div class="col-md-6 float-left">
-                        {{ $depts->links() }}
+                        @if (count($depts) != 0)
+                        <ul class="pagination pagination-md ">
+                          @if ($depts->hasMorePages())
+                              <a href="{{ $depts->nextPageUrl() }}" class="btn btn-default m-1 p-2">Next</a>
+                          @endif
+                          @if($depts->currentPage() > 1)
+                              <a href="{{ $depts->previousPageUrl() }}" class="btn btn-default m-1 p-2">Prev</a>
+                          @endif
+                        </ul>
+                        @endif
                     </div>
                 </div>
                 @endif

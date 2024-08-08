@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 use Illuminate\Support\Facades\Session;
-
+use App\Models\TaskDetail;
 class Helper
 {
     public static function checkUser()
@@ -22,5 +22,12 @@ class Helper
             return 0;
         }
     }
-
+        public static function getTaskDetailList($t_id)
+        {
+        
+          
+                return $task_details = TaskDetail::where('t_id',$t_id)->get();
+             
+    
+        }
 }

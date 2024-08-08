@@ -107,7 +107,14 @@
                         {{ $products->lastItem() }} of total {{ $products->total() }}
                     </div>
                     <div class="col-md-6 float-left">
-                        {{ $products->links() }}
+                        <ul class="pagination pagination-md ">
+                          @if ($products->hasMorePages())
+                              <a href="{{ $products->nextPageUrl() }}" class="btn btn-default m-1 p-2">Next</a>
+                          @endif
+                          @if($products->currentPage() > 1)
+                              <a href="{{ $products->previousPageUrl() }}" class="btn btn-default m-1 p-2">Prev</a>
+                          @endif
+                        </ul>
                     </div>
                 </div>
                 @endif

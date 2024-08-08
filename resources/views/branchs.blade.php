@@ -26,7 +26,10 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
+                            @if(session('isAdmin') == 1)
+
                             <div class="col-md-12"><a href="{{ url('/branch') }}" class="btn btn-info float-left me-5">Add New Branch</a></div>
+                            @endif
                         </div>
                     </div>
                     {{-- @if(session()->has('message')) --}}
@@ -45,8 +48,11 @@
                             <th class="col-md-2" scope="col">Description</th>
                             <th class="col-md-2" scope="col">Created Date</th>
                             <th class="col-md-1" scope="col"> Status</th>
+                            @if(session('isAdmin') == 1)
+
                             <th class="col-md-4" scope="col" colspan="4" class="text-center">Action
                             </th>
+                            @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -71,14 +77,17 @@
                                     </td>
                                     <td class="text-left">
                                         @if($branch->status == 1)
-                                        <span class="bg-success p-1">Active</span>
+                                        <span class="badge badge-success">Active</span>
                                         @elseif($branch->status == 4)
-                                        <span class="bg-danger  p-1">De-Active</span>
+                                        <span class="badge badge-danger">De-Active</span>
                                         @endif
                                     </td>
+                                    @if(session('isAdmin') == 1)
+
                                     <td class="text-left">
                                         <a href="{{ route('branch.edit', ['id' => $branch->id]) }}" class="btn btn-info">Edit</a>
                                     </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                                 @else
@@ -96,7 +105,14 @@
                         {{ $branchs->lastItem() }} of total {{ $branchs->total() }}
                     </div>
                     <div class="col-md-6 float-left">
-                        {{ $branchs->links() }}
+                        <ul class="pagination pagination-md ">
+                          @if ($branchs->hasMorePages())
+                              <a href="{{ $branchs->nextPageUrl() }}" class="btn btn-default m-1 p-2">Next</a>
+                          @endif
+                          @if($branchs->currentPage() > 1)
+                              <a href="{{ $branchs->previousPageUrl() }}" class="btn btn-default m-1 p-2">Prev</a>
+                          @endif
+                        </ul>
                     </div>
                 </div>
                 @endif
