@@ -169,6 +169,15 @@
             
             </ul>
           </li>
+          
+          <li class="nav-item">
+            <a href="/pos" class="nav-link">
+              <i class="nav-icon fas fa-cart-plus fa-lg mr-2"></i>
+              <p>
+                POS
+              </p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-balance-scale"></i>
