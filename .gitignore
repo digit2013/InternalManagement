@@ -1,1 +1,4 @@
-# 
+*.log
+storage/
+public/
+node_modules/

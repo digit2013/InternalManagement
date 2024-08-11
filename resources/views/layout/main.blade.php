@@ -291,6 +291,9 @@
   </div>
 </div>  
 <script>
+//   function numberWithCommas(x) {
+//     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+// }
     $.widget.bridge('uibutton', $.ui.button)
     setInterval(function(){ 
       $.ajax({

@@ -31,7 +31,6 @@ class UserController extends Controller
         ->join('branchs', 'branchs.id', '=', 'users.b_id')
         ->join('departments', 'departments.id', '=', 'users.d_id')
         ->join('roles', 'roles.id', '=', 'users.r_id')
-
         ->select('users.id', 'users.name', 'users.email','users.phone','branchs.id as b_id','branchs.name as b_name','headoffices.id as h_id','headoffices.name as h_name','departments.id as d_id','departments.name as d_name','roles.id as r_id','roles.name as r_name', 'users.created_at', 'users.updated_at', 'users.status')
         ->paginate(10);
         return view('users', compact('users'));
@@ -39,12 +38,10 @@ class UserController extends Controller
     }
     public function getUser()
     {
-       
         $hos = HeadOffice::get(["name", "id"]);
         $branchs= Branch::get(["name", "id"]);
         $depts= Department::get(["name", "id"]);
         $roles = Role::get(["name", "id"]);
-
         return view('user', ['branchs' => $branchs, 'headoffices' => $hos,'depts' => $depts,'roles'=>$roles]);
 
     }
@@ -55,14 +52,11 @@ class UserController extends Controller
         $branchs = Branch::where('h_id',$user->h_id)->get(["name", "id"]);
         $depts = Department::where('h_id',$user->h_id)->where('b_id',$user->b_id)->get(["name", "id"]);
         $roles = Role::get(["name", "id"]);
-
         return view('user', ['user' => $user, 'headoffices' => $headoffices,'branchs' => $branchs,'depts' => $depts,'roles'=>$roles]);
     }
 
     public function saveUser(Request $request,$id=null)
     {
-
-       
         if($id == null){
                 $validatedData = $request->validate(
                         [
@@ -150,6 +144,16 @@ class UserController extends Controller
         
     }
     function userLogin(Request $request ){
+        $validatedData = $request->validate(
+            [
+                'email' => 'required',
+                'password' => 'required',
+            ],
+            [
+                'name.required' => 'Please email address.',
+                'password.required' => 'Please password.'
+
+            ] );
         $user = DB::table('users')->where('email',$request->email)->first();
         if (Hash::check($request->input('password'), $user->password)) {
             Session::put('user',$user);

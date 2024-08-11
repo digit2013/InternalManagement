@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
+use App\Http\Controllers\StockController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +32,9 @@ Route::get('/categories', [App\Http\Controllers\ProductController::class, 'getCa
 Route::get('/productlist', [App\Http\Controllers\ProductController::class, 'getProducts']);
 Route::get('/units', [App\Http\Controllers\ProductController::class, 'getUnits']);
 Route::get('/tasks', [App\Http\Controllers\TaskController::class, 'getTasks']);
+Route::get('/customers', [App\Http\Controllers\CustomerController::class, 'getCustomers']);
+Route::get('/discounts', [App\Http\Controllers\StockController::class, 'getDiscounts']);
+Route::get('/pos', [App\Http\Controllers\StockController::class, 'pos']);
 
 Route::get('/role', [App\Http\Controllers\SetupController::class, 'getRole']);
 Route::get('/role/{id}', [App\Http\Controllers\SetupController::class, 'getRoleById'])->name('role.edit');
@@ -81,7 +86,17 @@ Route::get('/unit/{id}', [App\Http\Controllers\ProductController::class, 'getUni
 Route::post('/unit-new',  [App\Http\Controllers\ProductController::class, 'saveUnit'])->name('unit.create');
 Route::put('/unit/{id}', [App\Http\Controllers\ProductController::class, 'saveUnit'])->name('unit.update');
 
+Route::get('/customer', [App\Http\Controllers\CustomerController::class, 'getCustomer']);
+Route::get('/customer/{id}', [App\Http\Controllers\CustomerController::class, 'getCustomerById'])->name('customer.edit');
+Route::post('/customer-new',  [App\Http\Controllers\CustomerController::class, 'saveCustomer'])->name('customer.create');
+Route::put('/customer/{id}', [App\Http\Controllers\CustomerController::class, 'saveCustomer'])->name('customer.update');
+Route::get('/customer/{id}/status', [App\Http\Controllers\CustomerController::class, 'updateCustomerStatus'])->name('customer.status');
 
+Route::get('/discount', [App\Http\Controllers\StockController::class, 'getDiscount']);
+Route::get('/discount/{id}', [App\Http\Controllers\StockController::class, 'getDiscountById'])->name('discount.edit');
+Route::post('/discount-new',  [App\Http\Controllers\StockController::class, 'saveDiscount'])->name('discount.create');
+Route::put('/discount/{id}', [App\Http\Controllers\StockController::class, 'saveDiscount'])->name('discount.update');
+Route::get('/discount/{id}/status', [App\Http\Controllers\StockController::class, 'updateDiscountStatus'])->name('discount.status');
 
 Route::get('/product', [App\Http\Controllers\ProductController::class, 'getProduct']);
 Route::get('/product/{id}', [App\Http\Controllers\ProductController::class, 'getProductById'])->name('product.edit');
@@ -91,6 +106,16 @@ Route::put('/product/{id}', [App\Http\Controllers\ProductController::class, 'sav
 Route::get('/product-images/{id}',  [App\Http\Controllers\ProductController::class, 'showProductImages'])->name('images.show');
 Route::get('product-image/{productImageId}/delete', [App\Http\Controllers\ProductController::class, 'destroy']);
 Route::post('products/{productId}/upload', [App\Http\Controllers\ProductController::class, 'imageStore']);
+
+
+Route::get('cart', [StockController::class, 'showCartTable']);
+Route::get('add-to-cart/{id}', [StockController::class, 'addToCart']);
+Route::get('minus-to-cart/{id}', [StockController::class, 'minusToCart']);
+Route::get('custom-to-cart/{id}/{q}', [StockController::class, 'customToCart']);
+
+Route::delete('remove-from-cart', [StockController::class, 'removeCartItem']);
+Route::get('clear-cart', [StockController::class, 'clearCart']);
+
 
 Route::get('/task', [App\Http\Controllers\TaskController::class, 'getTask']);
 Route::get('/task/{id}', [App\Http\Controllers\TaskController::class, 'getTaskById'])->name('task.edit');

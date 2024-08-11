@@ -187,4 +187,11 @@ return [
 
     ])->toArray(),
 
+
+    'sale_type' =>[
+        'outwardConsignment'=>1,
+        'inwardConsignment'=>2,
+        'directSale'=>3
+    ]
+ 
 ];
