@@ -64,14 +64,14 @@ class SetupController extends Controller
         if($id == null){
                 $validatedData = $request->validate(
                         [
-                            'name' => 'required|min:3|max:20',
+                            'name' => 'required|min:3|max:50',
                             'description' => 'required|min:3|max:50',
 
                         ],
                         [
                             'name.required' => 'Please Input Name.',
                             'name.min' => 'Name must be at least 3 characters.',
-                            'name.max' => 'Name must be at most 20 characters.',
+                            'name.max' => 'Name must be at most 50 characters.',
                             'description.required' => 'Please Input Name.',
                             'description.min' => 'Name must be at least 3 characters.',
                             'description.max' => 'Name must be at most 20 characters.',

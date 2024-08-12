@@ -90,7 +90,7 @@
                   <i class="fas fa-ellipsis-v"></i>
                   <i class="fas fa-ellipsis-v"></i>
                 </span>
-                <span class="text">{{$taskd->description}}</span>
+                <span class="text">{{$taskd->name}}-{{$taskd->description}}</span>
                 @if($taskd->status == 1)
                 <small class="badge badge-info"><i class="far fa-clock"></i>{{$taskd->assign_end_date}}</small>
                 @elseif($taskd->status == 2)
