@@ -192,6 +192,15 @@ return [
         'outwardConsignment'=>1,
         'inwardConsignment'=>2,
         'directSale'=>3
-    ]
+    ],
+
+    'selling' =>[
+        'retail' => 1,
+        'reseller' => 2,
+        'wholesales' =>3,
+        'test' =>4
+
+
+    ],
  
 ];

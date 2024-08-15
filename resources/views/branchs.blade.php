@@ -45,7 +45,7 @@
                                     <th class="col-md-2" scope="col">Head Office</th>
                                     <th class="col-md-1" scope="col">Name</th>
                             <th class="col-md-2" scope="col">Location</th>
-                            <th class="col-md-2" scope="col">Description</th>
+                            <th class="col-md-2" scope="col">Branch Code</th>
                             <th class="col-md-2" scope="col">Created Date</th>
                             <th class="col-md-1" scope="col"> Status</th>
                             @if(session('isAdmin') == 1)

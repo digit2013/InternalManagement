@@ -80,7 +80,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="inputAddress" class="form-label">Description</label>
+                                <label for="inputAddress" class="form-label">Branch Code</label>
                                 <input type="text" class="form-control col-md-12" id="description" name="description" value="{{ $branch->description ?? '' }}">
 
 

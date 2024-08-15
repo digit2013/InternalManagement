@@ -35,6 +35,7 @@ Route::get('/tasks', [App\Http\Controllers\TaskController::class, 'getTasks']);
 Route::get('/customers', [App\Http\Controllers\CustomerController::class, 'getCustomers']);
 Route::get('/discounts', [App\Http\Controllers\StockController::class, 'getDiscounts']);
 Route::get('/pos', [App\Http\Controllers\StockController::class, 'pos']);
+Route::get('/pos/{id}', [App\Http\Controllers\StockController::class, 'posSellingType']);
 
 Route::get('/role', [App\Http\Controllers\SetupController::class, 'getRole']);
 Route::get('/role/{id}', [App\Http\Controllers\SetupController::class, 'getRoleById'])->name('role.edit');
@@ -107,11 +108,16 @@ Route::get('/product-images/{id}',  [App\Http\Controllers\ProductController::cla
 Route::get('product-image/{productImageId}/delete', [App\Http\Controllers\ProductController::class, 'destroy']);
 Route::post('products/{productId}/upload', [App\Http\Controllers\ProductController::class, 'imageStore']);
 
+Route::get('/stocks', [App\Http\Controllers\StockController::class, 'getStocks']);
+Route::put('/stocks/{id}', [App\Http\Controllers\StockController::class, 'updateStocks'])->name('stock.update');
+
 
 Route::get('cart', [StockController::class, 'showCartTable']);
-Route::get('add-to-cart/{id}', [StockController::class, 'addToCart']);
+Route::get('add-to-cart/{id}/{sid}/{pid}', [StockController::class, 'addToCart']);
 Route::get('minus-to-cart/{id}', [StockController::class, 'minusToCart']);
 Route::get('custom-to-cart/{id}/{q}', [StockController::class, 'customToCart']);
+
+Route::post('sale', [App\Http\Controllers\StockController::class, 'saleProduct'])->name('sale.create');
 
 Route::delete('remove-from-cart', [StockController::class, 'removeCartItem']);
 Route::get('clear-cart', [StockController::class, 'clearCart']);

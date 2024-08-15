@@ -41,6 +41,7 @@
                         <form id="itemFrom" role="form" method="POST" action="{{ isset($ho) ? route('ho.update',$ho->id) : route('ho.create') }}">
                             @csrf
                             @isset($ho)
+                            @method('PUT')
                             @endisset
 
 
