@@ -11,23 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('meeting_mintues', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('name');
-            $table->longText('description');
-            $table->integer('isAdmin');
-            $table->integer('parent')->default(0);
+            $table->date('meeting_date');
+            $table->string('description');
+            $table->integer('host');
+            $table->string('attendees');
             $table->timestamps();
             $table->smallinteger('status')->default(1);
 
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('meeting_mintues');
     }
 };

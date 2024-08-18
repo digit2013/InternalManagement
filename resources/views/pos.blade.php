@@ -277,7 +277,6 @@
 
 <script>
     $("input[id='qty']").on("change", function() {
-        alert("herar");
         $.ajax({
             url: "/custom-to-cart/" +$(this).data("id")+"/"+this.value,
             type: "GET",
@@ -287,18 +286,12 @@
                 }
             }
         });
-
     });
     $(document).ready(function () {
         var gtotal = 0;
-
         $('#selling').on('change', function () {
             window.location.href = "/pos/"+this.value;
-
         });
-
-        
-
         $('#discounts').on('change', function () {
             // if(this.data('id')==1){
             //     gtotal = JSON.parse("{{ json_encode($total) }}") - this.value;
@@ -320,16 +313,12 @@
             }else{
                 gtotal = JSON.parse("{{ json_encode($total) }}");
                d = 0;
-
             }
             $('#discountAmt').val(d);
             $('#divDiscount').html('('+d+')')
             $('#did').val($(this).find(':selected').attr('data-id'));
             $('#gt').html("$"+gtotal);
         });
-
-
-
         });
     $(".remove-from-cart").click(function(e) {
         e.preventDefault();

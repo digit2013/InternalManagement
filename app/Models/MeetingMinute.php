@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class MeetingMinute extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -17,12 +17,14 @@ class Role extends Model
      *
      * @var array<int, string>
      */
+    protected $table = 'meeting_mintues';
+
     protected $fillable = [
         'id',
-        'name',
+        'meeting_date',
         'description',
-        'isAdmin',
-        'parent',
+        'host',
+        'attendees',
         'status'
     ];
 }

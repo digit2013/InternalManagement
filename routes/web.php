@@ -36,6 +36,7 @@ Route::get('/customers', [App\Http\Controllers\CustomerController::class, 'getCu
 Route::get('/discounts', [App\Http\Controllers\StockController::class, 'getDiscounts']);
 Route::get('/pos', [App\Http\Controllers\StockController::class, 'pos']);
 Route::get('/pos/{id}', [App\Http\Controllers\StockController::class, 'posSellingType']);
+Route::get('/meeting-minutes', [App\Http\Controllers\SetupController::class, 'getMeetingMinutes']);
 
 Route::get('/role', [App\Http\Controllers\SetupController::class, 'getRole']);
 Route::get('/role/{id}', [App\Http\Controllers\SetupController::class, 'getRoleById'])->name('role.edit');
@@ -111,6 +112,10 @@ Route::post('products/{productId}/upload', [App\Http\Controllers\ProductControll
 Route::get('/stocks', [App\Http\Controllers\StockController::class, 'getStocks']);
 Route::put('/stocks/{id}', [App\Http\Controllers\StockController::class, 'updateStocks'])->name('stock.update');
 
+Route::get('/meeting-minute', [App\Http\Controllers\SetupController::class, 'getMeetingMinute']);
+Route::get('/meeting-minute/{id}', [App\Http\Controllers\SetupController::class, 'getMeetingMinuteById'])->name('minute.edit');
+Route::post('/meeting-minute-new',  [App\Http\Controllers\SetupController::class, 'saveMeetingMinute'])->name('minute.create');
+Route::put('/meeting-minute/{id}', [App\Http\Controllers\SetupController::class, 'saveMeetingMinute'])->name('minute.update');
 
 Route::get('cart', [StockController::class, 'showCartTable']);
 Route::get('add-to-cart/{id}/{sid}/{pid}', [StockController::class, 'addToCart']);

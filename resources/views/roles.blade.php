@@ -42,7 +42,7 @@
                                     <th class="col-md-1" scope="col">Id</th>
 
                                     <th class="col-md-1" scope="col">Name</th>
-                            <th class="col-md-2" scope="col">Description</th>
+                            <th class="" scope="col">Parent Role</th>
                             <th class="col-md-2" scope="col">Created Date</th>
                             <th class="col-md-1" scope="col"> Status</th>
                             <th class="col-md-4" scope="col" colspan="4" class="text-center">Action
@@ -57,7 +57,23 @@
                                 <td> {{$role->id }} </td>
 
                                     <td class="text-left"> {{ $role->name }} </td>
-                                    <td class="text-left"> {{ $role->description }} </td>
+                                    <td class="text-left"> 
+                                        @if($role->parent >0 )
+                                        <?php $i = 0; $parent_roles = $helper->getAllRolesById($role->parent)[0]->parent_role; ?> 
+                                        @if(!empty($parent_roles))
+                                        @foreach(explode(',',$parent_roles) as $r)
+                                            {{$helper->getRole($r)->name;}} 
+                                            @if($i < count(explode(',',$parent_roles))-1)
+                                            >
+                                            @endif
+                                            <?php $i++; ?>
+                                        @endforeach
+                                        @endif
+                                        @else
+                                        -
+                                        @endif
+
+                             </td>
                                     <td class="text-left">
                                         @if ($role->created_at == null)
                                         <span class="text-danger"> No Date Set</span>
@@ -72,10 +88,38 @@
                                         <span class="bg-danger  p-1">De-Active</span>
                                         @endif
                                     </td>
+                                 
                                     <td class="text-left">
-                                        <a href="{{ route('role.edit', ['id' => $role->id]) }}" class="btn btn-info">Edit</a>
-                                    </td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-danger">Action</button>
+                                            <button type="button" class="btn btn-danger dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                              <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <div class="dropdown-menu" role="menu" style="">
+                                                <a class="dropdown-item" role="button" data-toggle="modal" data-target="#jd-{{ $role->id }}">Job Description</a>
+                                                    <a href="{{ route('role.edit', ['id' => $role->id]) }}" class="dropdown-item">Edit</a>
+                                            </div>
+                                          </div>
 
+                                    </td>
+                                    <div class="modal fade" id="jd-{{ $role->id }}" >   
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h4 class="modal-title">Job Description</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div class="card-body">
+                                                {!!$role->description!!}
+                                              </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                          </div>
+                                        
+                                    
+                                    </div>
                                     {{-- <td>
                                     @if($role->status == 1)
                                         <a href="{{ route('role.status', ['id' => $role->id,'status'=>'2']) }}" class="btn btn-info col-sm-12 float-right"  >Suspend</a>

@@ -10,21 +10,66 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Role;
 use App\Models\HeadOffice;
 use App\Models\Department;
-
+use App\Models\MeetingMinute;
+use App\Models\User;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use PDOException;
+class help
+{
+        public static function getUserName($u_id)
+        {
+
+
+                return DB::table('users')->find($u_id);
+        }
+        public static function getRole($id){
+                return Role::find($id);
+        }
+        public static function getAllRolesById($rid)
+        {
+                $role_hierarchy = DB::select('SELECT t2.id, GROUP_CONCAT(t2.r ORDER BY t2.lvl DESC) as parent_role
+FROM (
+  SELECT id, r, lvl
+  FROM (
+    SELECT
+      t0.r_init AS id,
+      @r := IF(t0.reset_r = 1, t0.r_init, 
+                (select parent from roles where id = @r)) AS r,
+      @l := IF(t0.reset_r = 1, 1, @l + 1) AS lvl
+    FROM 
+      (SELECT m0.id as counter, m1.id AS r_init,
+         ((SELECT min(id) FROM roles) = m0.id) AS reset_r 
+       FROM roles m0, roles m1
+       ORDER BY r_init, counter
+      ) t0 
+    ORDER BY t0.r_init, t0.counter
+  ) t1
+  WHERE r <> 0
+) t2
+where t2.id = '.$rid.'
+GROUP BY t2.id;');
+                return $role_hierarchy;
+        }
+        
+}
 class SetupController extends Controller
 {
-  
+        public function getMeetingMinutes()
+        {
+                $minutes = MeetingMinute::paginate(10);
+    
+                return view('meeting-minutes', compact('minutes'))->with('helper', new help);
+    
+        }
     public function getRoles()
     {
             $roles = Role::where('status',1)->paginate(10);
 
-            return view('roles', compact('roles'));
+            return view('roles', compact('roles'))->with('helper', new help);
 
     }
    
@@ -82,7 +127,7 @@ class SetupController extends Controller
                     $roleData->name = $request->name;
                     $roleData->description = $request->description;
                     $roleData->isAdmin = $request->has('isAdmin')==true ? 1:0;
-
+                    $roleData->parent =  empty($request->get('parent')) ? 0:$request->get('parent');
                     $roleData->status = 1;
                     $roleData->save();
                     return redirect()->back()->with('message', 'Role Save Successfully!');
@@ -100,6 +145,7 @@ class SetupController extends Controller
                 Role::find($id)->update([
                         'name' => $request->name,
                         'description' => $request->description,
+                        'parent' => empty($request->get('parent')) ? 0:$request->get('parent'),
                         'isAdmin' => $request->has('isAdmin')==true ? 1:0,
                         'updated_at' => Carbon::now()
                     ]);
@@ -117,17 +163,40 @@ class SetupController extends Controller
     }
    
     public function getRole()
-    {
-        return view('role');
+    {   
+        $roles = Role::where('status',1)->get();
+        return view('role',compact('roles'));
+
+    }
+    public function getMeetingMinute()
+    {   
+        $users = DB::table('users')
+        ->join('departments', 'departments.id', '=', 'users.d_id')
+        ->join('branchs', 'users.b_id', '=', 'branchs.id')
+        ->join('headoffices', 'users.h_id', '=', 'headoffices.id')
+        ->select('users.id as id', 'users.name', 'headoffices.name as hname', 'branchs.name as bname', 'departments.name as dname')->get();        
+        return view('/meeting-minute',compact('users'))->with('helper', new help);
 
     }
     public function getRoleById($id)
     {
+        $roles = Role::where('status',1)->get();
+
         $role = DB::table('roles')->find($id);
-        return View::make('/role', compact('role'));
+        return View::make('/role', compact('role','roles'));
 
     }
+    public function getMeetingMinuteById($id)
+    {
+                $minute = MeetingMinute::find($id);
+        $users = DB::table('users')
+        ->join('departments', 'departments.id', '=', 'users.d_id')
+        ->join('branchs', 'users.b_id', '=', 'branchs.id')
+        ->join('headoffices', 'users.h_id', '=', 'headoffices.id')
+        ->select('users.id as id', 'users.name', 'headoffices.name as hname', 'branchs.name as bname', 'departments.name as dname')->get();    
+        return View::make('/meeting-minute', ['minute' => $minute, 'users' => $users]);
 
+    }
     public function getHo()
     {
         return view('ho');
@@ -199,7 +268,63 @@ class SetupController extends Controller
                 }
         }
     }
-   
+    public function saveMeetingMinute(Request $request,$id=null)
+    {
+
+        if($id == null){
+                // $validatedData = $request->validate(
+                //         [
+                //                 'host' => 'gt:0',
+                //                 'attendees' => 'gt:0',
+                //                 'description' => 'required|min:10',
+
+                //         ],
+                //         [
+                //             'host.gt:0' => 'Select Host.',
+                //             'attendees.gt:0' => 'Select Attendees.',
+                //             'description.require' => 'Please Input Meeting Minute Detail.',
+                           
+                //         ]
+                //     );
+                    try {
+                    $minute = new MeetingMinute();
+                    $minute->meeting_date = $request->meeting_date;
+                    $minute->description = $request->description;
+                    $minute->host = $request->get('host');
+                    $minute->attendees = implode(',',$request->attendees);
+                    $minute->status = 1;
+                    $minute->save();
+                    return redirect()->back()->with('message', 'Meeting Minute Save Successfully!');
+                    }catch (ConnectionException $ex) {
+                        Log::error($ex);
+                        return redirect()->back()->with('message', 'Bad Request!');
+                } catch (Exception $ex) {
+                        Log::error($ex);
+                        return redirect()->back()->with('message', 'Internal Server Error!');
+                } catch (PDOException $e) {
+                        return redirect()->back()->with('message', 'Database Server Error!');
+                }
+        }else{
+                try{
+                        MeetingMinute::find($id)->update([
+                        'meeting_date' => $request->meeting_date,
+                        'host' =>  $request->get('host'),
+                        'attendees'  => implode(',',$request->attendees),
+                        'description' => $request->description,
+                        'updated_at' => Carbon::now()
+                    ]);
+                return redirect()->back()->with('message', 'Meeting Minute Update Successfully!');
+                }catch (ConnectionException $ex) {
+                        Log::error($ex);
+                        return redirect()->back()->with('message', 'Bad Request!');
+                } catch (Exception $ex) {
+                        Log::error($ex);
+                        return redirect()->back()->with('message', 'Internal Server Error!');
+                } catch (PDOException $e) {
+                        return redirect()->back()->with('message', 'Database Server Error!');
+                }
+        }
+    }
 
     public function getBranch()
     {

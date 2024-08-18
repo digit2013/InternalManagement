@@ -44,7 +44,26 @@
                             @method('PUT')
                             @endisset
 
-
+                            <div class="form-group mb-3">
+                                <select class="form-control" name="parent" id="parent">
+                                    <option value="0">-- Parent Role --</option>
+                                    @foreach ($roles as $data)
+                                    @if((isset($role->parent)) && ($role->parent == $data->id))
+                                    <option selected value="{{$data->id}}">
+                                        {{$data->name}}
+                                    </option>
+                                    @else
+                                    <option value="{{$data->id}}">
+                                        {{$data->name}}
+                                    </option>
+                                    @endif
+                                 
+                                    @endforeach
+                                </select>
+                                @error('headoffice')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="form-group">
                                 <label for="inputAddress" class="form-label">Role Name </label>
                                 <input type="text" class="form-control col-md-12" id="name" name="name" value="{{ $role->name ?? '' }}">
@@ -55,10 +74,8 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="inputAddress" class="form-label">Description</label>
-                                <input type="text" class="form-control col-md-12" id="description" name="description" value="{{ $role->description ?? '' }}">
-
-
+                                <label for="inputAddress" class="form-label">JD</label>
+                                <textarea id="description" name="description" text={!! $role->description ?? ''!!} ></textarea>
                                 @error('description')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -93,7 +110,31 @@
 
         </div>
 </section><!-- End Services Section -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<script>
+  $(function () {
+
+    $('.select2').select2()
+    $(document).ready(function() {
+        $('#description').summernote({
+            height: 300,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview']],
+            ]
+        });
+    });
+
+})
+
+</script>
 @endsection
 @push('scripts')
 

@@ -196,9 +196,8 @@ return [
 
     'selling' =>[
         'retail' => 1,
-        'reseller' => 2,
+        'retailer' => 2,
         'wholesales' =>3,
-        'test' =>4
 
 
     ],

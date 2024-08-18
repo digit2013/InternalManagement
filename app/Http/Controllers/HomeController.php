@@ -26,9 +26,22 @@ use App\Models\TaskDetail;
 use App\Models\TaskFiles;
 use App\Models\TaskHead;
 use App\Models\User;
+use App\Models\Stock;
+use App\Models\Invoice;
+use App\Models\MeetingMinute;
 
 class help
 {
+    public static function getStock(){
+
+    }
+    public static function getPrice($price_type,$stock_id){
+        return DB::table('prices')->where('stock_id',$stock_id)->where('price_type',$price_type)->get();
+    }
+    public static function getProductImage($p_id)
+    {
+        return DB::table('product_images')->where('p_id', $p_id)->get();
+    }
     public static function getTopWidget(){
         if(Session::get('isAdmin')==1){
             $userCount = User::where('status',1)->count();
@@ -81,11 +94,20 @@ class HomeController extends BaseController
         if (Session::get('user') == null) {
             return view('login');
         } else {
+            $branchCount = Branch::where('status',1)->count();
+            $deptCount = Department::where('status',1)->count();
+            $minutes = MeetingMinute::get();
             $overdueTaskCount = TaskDetail::where('status',3)->where('u_id',Session::get('user')->id)->count();
             $pendingTaskCount = TaskDetail::where('status',2)->where('u_id',Session::get('user')->id)->count();
             $newTaskCount = TaskDetail::where('status',1)->where('u_id',Session::get('user')->id)->count();
             $completeTaskCount = TaskDetail::where('status',4)->where('u_id',Session::get('user')->id)->count();
-            return view('home',compact('newTaskCount', 'pendingTaskCount','overdueTaskCount','completeTaskCount'))->with('helper', new help);
+            $stocks = DB::table('products')
+            ->join('stocks', 'stocks.product_id', '=', 'products.id')
+            ->join('categories', 'categories.id', '=', 'products.c_id')
+            ->join('branchs', 'branchs.id', '=', 'stocks.warehouse_id')
+            ->select('products.id', 'products.name','stocks.id as sid', 'products.description','stocks.qty as sqty','stocks.warehouse_id as qbid','branchs.name as swarehouse','categories.name as cname')->get();
+
+            return view('home',compact('newTaskCount', 'pendingTaskCount','overdueTaskCount','completeTaskCount','stocks','branchCount','deptCount','minutes'))->with('helper', new help);
         }
     }
 }
