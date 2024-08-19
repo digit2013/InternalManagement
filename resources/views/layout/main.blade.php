@@ -205,7 +205,35 @@
                   <p>Product</p>
                 </a>
               </li>
-            
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-warehouse"></i>
+              <p>
+                Stock
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/stocks" class="nav-link">
+                  <i class="fa fa-list-alt nav-icon"></i>
+                  <p>Stock Update</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/pos" class="nav-link">
+                  <i class="fa fa-circle nav-icon"></i>
+                  <p>Sales</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/productlist" class="nav-link">
+                  <i class="fa fa-indent nav-icon"></i>
+                  <p>Product</p>
+                </a>
+              </li>
             </ul>
           </li>
           @if (@session('isAdmin') == 1)
@@ -219,6 +247,7 @@
             </a>
             
           </li>
+          
           <li class="nav-item">
             <a href="/tasks" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
