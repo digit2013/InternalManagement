@@ -910,7 +910,7 @@
                 @foreach($minutes as $minute)
                 <li class="item">
                   <div class="">
-                    <a href="javascript:void(0)" class="product-title">Host - {{$helper->getUser($minute->host)->name}}
+                    <a class="product-title" role="button" data-toggle="modal" data-target="#minute-{{ $minute->id }}">Host - {{$helper->getUser($minute->host)->name}}
                       <span class="badge badge-warning float-right">Meeting - {{Carbon\Carbon::parse($minute->meeting_date)->format('Y/m/d')}}</span></a>
                     <span class="product-description">
                       <?php $i=0; $attendees = explode(',',$minute->attendees);?>
@@ -925,6 +925,22 @@
                       @endif
                     </span>
                   </div>
+                  <div class="modal fade" id="minute-{{ $minute->id }}" >   
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">Meeting Minute -  {{ Carbon\Carbon::parse($minute->created_at)->format('Y/m/d') }}</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            {!!$minute->description!!}
+                          </div>
+                         
+                        </div>
+                      </div>
+                </div>
                 </li>
 
                 @endforeach

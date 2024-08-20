@@ -81,9 +81,34 @@
                                         @endif
                                     </td>
                                     @if(session('isAdmin') == 1)
-                                    <td class="text-left" >
-                                        <a href="{{ route('minute.edit', ['id' => $minute->id]) }}" class="btn btn-info" >Edit</a>
+                                    <td class="text-left">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-danger">Action</button>
+                                            <button type="button" class="btn btn-danger dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                              <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <div class="dropdown-menu" role="menu" style="">
+                                                <a class="dropdown-item" role="button" data-toggle="modal" data-target="#minute-{{ $minute->id }}">View Detail
+                                                <a href="{{ route('minute.edit', ['id' => $minute->id]) }}" class="dropdown-item" >Edit</a>
+                                            </div>
+                                          </div>
                                     </td>
+                                    <div class="modal fade" id="minute-{{ $minute->id }}" >   
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h4 class="modal-title">Meeting Minute -  {{ Carbon\Carbon::parse($minute->created_at)->format('Y/m/d') }}</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div class="modal-body">
+                                                {!!$minute->description!!}
+                                              </div>
+                                             
+                                            </div>
+                                          </div>
+                                    </div>
                                     @endif
                                 </tr>
                                 @endforeach
