@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('meeting_mintues', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->date('meeting_date');
-            $table->string('description');
+            $table->longText('description');
             $table->integer('host');
-            $table->string('attendees');
+            $table->longText('attendees');
             $table->timestamps();
             $table->smallinteger('status')->default(1);
 
