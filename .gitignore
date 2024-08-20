@@ -1,4 +1,12 @@
 *.log
 storage/
-public/
 node_modules/
+public/dist
+public/images
+public/plugins
+public/products
+public/uploads
+public/.htaccess
+public/favicon.ico
+public/index.php
+public/robots.txt
