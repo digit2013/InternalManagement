@@ -95,7 +95,7 @@
             </a>
           </li>
           <li class="nav-item menu-open">
-            <a href="/inventory-dashboard" class="nav-link ">
+            <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Inventory Dashboard
@@ -103,7 +103,7 @@
             </a>
           </li>
           <li class="nav-item menu-open">
-            <a href="/salse-dashboard" class="nav-link ">
+            <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Sales Dashboard
@@ -111,7 +111,7 @@
             </a>
           </li>
           <li class="nav-item menu-open">
-            <a href="/salse-dashboard" class="nav-link ">
+            <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Data Dashboard
@@ -226,10 +226,23 @@
                   <p>Unit Measure</p>
                 </a>
               </li>
+              
               <li class="nav-item">
                 <a href="/productlist" class="nav-link">
                   <i class="fa fa-indent nav-icon"></i>
                   <p>Product</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/discounts" class="nav-link">
+                  <i class="fa far fa-circle nav-icon"></i>
+                  <p>Discounts</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/customers" class="nav-link">
+                  <i class="fa far fa-circle nav-icon"></i>
+                  <p>Customers</p>
                 </a>
               </li>
             </ul>

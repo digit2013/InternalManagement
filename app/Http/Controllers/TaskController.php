@@ -255,63 +255,67 @@ class TaskController extends Controller
 
         public function saveTask(Request $request, $id = null)
         {
-
-                if ($id == null) {
-                        // $validatedData = $request->validate(
-                        //         [
-                        //                 'destination.*'  => [
-                        //                         'required',
-                        //                         'distinct', // members of the array must be unique
-                        //                         'min:1'     // each string must have min 3 chars
-                        //                 ],
-                        //                 'heading' => 'required|min:10',
-
-                        //         ],
-                        //         [
-                        //             'heading.required' => 'Please Input Name.',
-                        //             'heading.min' => 'Name must be at least 10 characters.',
-                        //             'heading.min' => 'Name must be at least 10 characters.',
-
-                        //             'destination.*' => 'Please select Destination Departments.'
-                        //         ]
-                        //     );
-                        try {
-                                $taskhead = new TaskHead();
-                                $taskhead->name = $request->name;
-                                $taskhead->description = $request->description;
-                                $taskhead->created_by = session('user')->id;
-                                $taskhead->updated_by = session('user')->id;
-                                $taskhead->status = 1;
-                                $taskhead->save();
-                                return redirect()->back()->with('message', 'Task Save Successfully!');
-                        } catch (ConnectionException $ex) {
-                                Log::error($ex);
-                                return redirect()->back()->with('message', 'Bad Request!');
-                        } catch (Exception $ex) {
-                                Log::error($ex);
-                                return redirect()->back()->with('message', 'Internal Server Error!');
-                        } catch (PDOException $e) {
-                                return redirect()->back()->with('message', 'Database Server Error!');
+                if(session('user')){
+                        if ($id == null) {
+                                // $validatedData = $request->validate(
+                                //         [
+                                //                 'destination.*'  => [
+                                //                         'required',
+                                //                         'distinct', // members of the array must be unique
+                                //                         'min:1'     // each string must have min 3 chars
+                                //                 ],
+                                //                 'heading' => 'required|min:10',
+        
+                                //         ],
+                                //         [
+                                //             'heading.required' => 'Please Input Name.',
+                                //             'heading.min' => 'Name must be at least 10 characters.',
+                                //             'heading.min' => 'Name must be at least 10 characters.',
+        
+                                //             'destination.*' => 'Please select Destination Departments.'
+                                //         ]
+                                //     );
+                                try {
+                                        $taskhead = new TaskHead();
+                                        $taskhead->name = $request->name;
+                                        $taskhead->description = $request->description;
+                                        $taskhead->created_by = session('user')->id;
+                                        $taskhead->updated_by = session('user')->id;
+                                        $taskhead->status = 1;
+                                        $taskhead->save();
+                                        return redirect()->back()->with('message', 'Task Save Successfully!');
+                                } catch (ConnectionException $ex) {
+                                        Log::error($ex);
+                                        return redirect()->back()->with('message', 'Bad Request!');
+                                } catch (Exception $ex) {
+                                        Log::error($ex);
+                                        return redirect()->back()->with('message', 'Internal Server Error!');
+                                } catch (PDOException $e) {
+                                        return redirect()->back()->with('message', 'Database Server Error!');
+                                }
+                        } else {
+                                try {
+                                        TaskHead::find($id)->update([
+                                                'name' => $request->name,
+                                                'description' => $request->description,
+                                                'updated_by' => session('user')->id,
+                                                'updated_at' => Carbon::now()
+                                        ]);
+                                        return redirect()->back()->with('message', 'Task Update Successfully!');
+                                } catch (ConnectionException $ex) {
+                                        Log::error($ex);
+                                        return redirect()->back()->with('message', 'Bad Request!');
+                                } catch (Exception $ex) {
+                                        Log::error($ex);
+                                        return redirect()->back()->with('message', 'Internal Server Error!');
+                                } catch (PDOException $e) {
+                                        return redirect()->back()->with('message', 'Database Server Error!');
+                                }
                         }
-                } else {
-                        try {
-                                TaskHead::find($id)->update([
-                                        'name' => $request->name,
-                                        'description' => $request->description,
-                                        'updated_by' => session('user')->id,
-                                        'updated_at' => Carbon::now()
-                                ]);
-                                return redirect()->back()->with('message', 'Task Update Successfully!');
-                        } catch (ConnectionException $ex) {
-                                Log::error($ex);
-                                return redirect()->back()->with('message', 'Bad Request!');
-                        } catch (Exception $ex) {
-                                Log::error($ex);
-                                return redirect()->back()->with('message', 'Internal Server Error!');
-                        } catch (PDOException $e) {
-                                return redirect()->back()->with('message', 'Database Server Error!');
-                        }
+                }else{
+                        return view('login');
                 }
+            
         }
 
         public function fetchUsers($deptId)

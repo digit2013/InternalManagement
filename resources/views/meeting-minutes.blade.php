@@ -60,7 +60,7 @@
                                 <td> {{$minute->id }} </td>
                                 <td class="text-left">{{ Carbon\Carbon::parse($minute->meeting_date)->format('Y/m/d') }} </td>
 
-                                    <td class="text-left"> {{ $minute->host }} </td>
+                                    <td class="text-left"> {{ $helper->getUserName($minute->host)->name }} </td>
                                     <td class="text-left">
                                         <?php $i=0; $attendees = explode(',',$minute->attendees);?>
                                         @if(!empty($attendees))

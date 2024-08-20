@@ -22,8 +22,6 @@ class help
 {
         public static function getUserName($u_id)
         {
-
-
                 return DB::table('users')->find($u_id);
         }
         public static function getRole($id){
@@ -87,7 +85,6 @@ class SetupController extends Controller
             ->join('headoffices', 'headoffices.id', '=', 'departments.h_id')
             ->select('departments.id', 'departments.name', 'departments.location','departments.description','branchs.id as b_id','branchs.name as b_name','headoffices.id as h_id','headoffices.name as h_name', 'departments.created_at', 'departments.updated_at', 'departments.status')
             ->paginate(10);
-
             return view('depts', compact('depts'));
 
     }
@@ -97,7 +94,6 @@ class SetupController extends Controller
             ->join('headoffices', 'headoffices.id', '=', 'branchs.h_id')
             ->select('branchs.id', 'branchs.name', 'branchs.location','branchs.description','headoffices.id as h_id','headoffices.name as h_name', 'branchs.created_at', 'branchs.updated_at', 'branchs.status')
             ->paginate(10);
-
             return view('branchs', compact('branchs'));
 
     }

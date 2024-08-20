@@ -77,69 +77,73 @@ class AnnoucementController extends Controller
 
     public function saveAnnoucement(Request $request,$id=null)
     {
-   
-        if($id == null){
-                // $validatedData = $request->validate(
-                //         [
-                //                 'destination.*'  => [
-                //                         'required',
-                //                         'distinct', // members of the array must be unique
-                //                         'min:1'     // each string must have min 3 chars
-                //                 ],
-                //                 'heading' => 'required|min:10',
-
-                //         ],
-                //         [
-                //             'heading.required' => 'Please Input Name.',
-                //             'heading.min' => 'Name must be at least 10 characters.',
-                //             'heading.min' => 'Name must be at least 10 characters.',
-
-                //             'destination.*' => 'Please select Destination Departments.'
-                //         ]
-                //     );
-                    try {
-                    $announce = new Annoucement();
-                    $announce->destination = implode(',',$request->destination);
-                    $announce->heading = $request->heading;
-                    $announce->information = $request->information;
-                    $announce->created_by = session('user')->id;
-                    $announce->updated_by = session('user')->id;
-                    $announce->startDate = Carbon::parse(explode('-',$request->effectDate)[0]);
-                    $announce->endDate = Carbon::parse(explode('-',$request->effectDate)[1]);
-                    $announce->status = 1;
-                    $announce->save();
-                    return redirect()->back()->with('message', 'Annoucement Save Successfully!');
-                    }catch (ConnectionException $ex) {
-                        Log::error($ex);
-                        return redirect()->back()->with('message', 'Bad Request!');
-                } catch (Exception $ex) {
-                        Log::error($ex);
-                        return redirect()->back()->with('message', 'Internal Server Error!');
-                } catch (PDOException $e) {
-                        return redirect()->back()->with('message', 'Database Server Error!');
+        if(session('user')){
+                if($id == null){
+                        // $validatedData = $request->validate(
+                        //         [
+                        //                 'destination.*'  => [
+                        //                         'required',
+                        //                         'distinct', // members of the array must be unique
+                        //                         'min:1'     // each string must have min 3 chars
+                        //                 ],
+                        //                 'heading' => 'required|min:10',
+        
+                        //         ],
+                        //         [
+                        //             'heading.required' => 'Please Input Name.',
+                        //             'heading.min' => 'Name must be at least 10 characters.',
+                        //             'heading.min' => 'Name must be at least 10 characters.',
+        
+                        //             'destination.*' => 'Please select Destination Departments.'
+                        //         ]
+                        //     );
+                            try {
+                            $announce = new Annoucement();
+                            $announce->destination = implode(',',$request->destination);
+                            $announce->heading = $request->heading;
+                            $announce->information = $request->information;
+                            $announce->created_by = session('user')->id;
+                            $announce->updated_by = session('user')->id;
+                            $announce->startDate = Carbon::parse(explode('-',$request->effectDate)[0]);
+                            $announce->endDate = Carbon::parse(explode('-',$request->effectDate)[1]);
+                            $announce->status = 1;
+                            $announce->save();
+                            return redirect()->back()->with('message', 'Annoucement Save Successfully!');
+                            }catch (ConnectionException $ex) {
+                                Log::error($ex);
+                                return redirect()->back()->with('message', 'Bad Request!');
+                        } catch (Exception $ex) {
+                                Log::error($ex);
+                                return redirect()->back()->with('message', 'Internal Server Error!');
+                        } catch (PDOException $e) {
+                                return redirect()->back()->with('message', 'Database Server Error!');
+                        }
+                }else{
+                        try{
+                                Annoucement::find($id)->update([
+                                'name' => $request->name,
+                                'destination' =>  implode(',',$request->destination),
+                                'heading' => $request->heading,
+                                'information' => $request->information,
+                                'startDate' => Carbon::parse(explode('-',$request->effectDate)[0]),
+                                'endDate' => Carbon::parse(explode('-',$request->effectDate)[1]),
+                                'updated_at' => Carbon::now()
+                            ]);
+                        return redirect()->back()->with('message', 'Annoucement Update Successfully!');
+                        }catch (ConnectionException $ex) {
+                                Log::error($ex);
+                                return redirect()->back()->with('message', 'Bad Request!');
+                        } catch (Exception $ex) {
+                                Log::error($ex);
+                                return redirect()->back()->with('message', 'Internal Server Error!');
+                        } catch (PDOException $e) {
+                                return redirect()->back()->with('message', 'Database Server Error!');
+                        }
                 }
         }else{
-                try{
-                        Annoucement::find($id)->update([
-                        'name' => $request->name,
-                        'destination' =>  implode(',',$request->destination),
-                        'heading' => $request->heading,
-                        'information' => $request->information,
-                        'startDate' => Carbon::parse(explode('-',$request->effectDate)[0]),
-                        'endDate' => Carbon::parse(explode('-',$request->effectDate)[1]),
-                        'updated_at' => Carbon::now()
-                    ]);
-                return redirect()->back()->with('message', 'Annoucement Update Successfully!');
-                }catch (ConnectionException $ex) {
-                        Log::error($ex);
-                        return redirect()->back()->with('message', 'Bad Request!');
-                } catch (Exception $ex) {
-                        Log::error($ex);
-                        return redirect()->back()->with('message', 'Internal Server Error!');
-                } catch (PDOException $e) {
-                        return redirect()->back()->with('message', 'Database Server Error!');
-                }
+                return view('login');
         }
+     
     }
     public function updateAnnoucementStatus(Request $request){
         try{
