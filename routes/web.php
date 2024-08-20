@@ -20,6 +20,9 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'home'])->name('hom
 
 Route::get('/login', [App\Http\Controllers\UserController::class, 'login'])->name('login');
 Route::post('/login', [App\Http\Controllers\UserController::class, 'userLogin'])->name('user.login');
+Route::get('/inventory-dashboard', [App\Http\Controllers\HomeController::class, 'inventoryData']);
+Route::get('/salses-dashboard', [App\Http\Controllers\HomeController::class, 'salesData']);
+Route::get('/data-collection', [App\Http\Controllers\HomeController::class, 'dataCollection']);
 
 
 Route::get('/roles', [App\Http\Controllers\SetupController::class, 'getRoles']);
@@ -37,6 +40,7 @@ Route::get('/discounts', [App\Http\Controllers\StockController::class, 'getDisco
 Route::get('/pos', [App\Http\Controllers\StockController::class, 'pos']);
 Route::get('/pos/{id}', [App\Http\Controllers\StockController::class, 'posSellingType']);
 Route::get('/meeting-minutes', [App\Http\Controllers\SetupController::class, 'getMeetingMinutes']);
+Route::get('/personal-source', [App\Http\Controllers\DataCollectionController::class, 'getPersons']);
 
 Route::get('/role', [App\Http\Controllers\SetupController::class, 'getRole']);
 Route::get('/role/{id}', [App\Http\Controllers\SetupController::class, 'getRoleById'])->name('role.edit');
@@ -82,6 +86,10 @@ Route::get('/category/{id}', [App\Http\Controllers\ProductController::class, 'ge
 Route::post('/category-new',  [App\Http\Controllers\ProductController::class, 'saveCategory'])->name('category.create');
 Route::put('/category/{id}', [App\Http\Controllers\ProductController::class, 'saveCategory'])->name('category.update');
 
+Route::get('/person-info', [App\Http\Controllers\DataCollectionController::class, 'getPerson']);
+Route::get('/person-edit/{id}', [App\Http\Controllers\DataCollectionController::class, 'getPersonById'])->name('person.edit');
+Route::post('/person-info-new',  [App\Http\Controllers\DataCollectionController::class, 'savePerson'])->name('person.create');
+Route::put('/person-info/{id}', [App\Http\Controllers\DataCollectionController::class, 'savePerson'])->name('person.update');
 
 Route::get('/unit', [App\Http\Controllers\ProductController::class, 'getUnit']);
 Route::get('/unit/{id}', [App\Http\Controllers\ProductController::class, 'getUnitById'])->name('unit.edit');
@@ -147,6 +155,10 @@ Route::post('api/fetch-branchs', [App\Http\Controllers\SetupController::class, '
 Route::post('api/fetch-depts', [App\Http\Controllers\SetupController::class, 'fetchDepts']);
 Route::get('api/fetch-annoucement', [App\Http\Controllers\AnnoucementController::class, 'fetchAnnoucements']);
 Route::get('api/fetch-users/{deptId}', [App\Http\Controllers\TaskController::class, 'fetchUsers']);
+
+Route::post('api/fetch-states', [App\Http\Controllers\DataCollectionController::class, 'fetchStates']);
+Route::post('api/fetch-cities  ', [App\Http\Controllers\DataCollectionController::class, 'fetchcities']);
+
 
 Route::get('/download/{fid}', [App\Http\Controllers\Controller::class, 'download'])->name('download');
 

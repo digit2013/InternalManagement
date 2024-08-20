@@ -104,7 +104,6 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        Customer
                     </div>
                     <div class="col-md-8">
                     <?php $customers=$helper->getCustomers();?>

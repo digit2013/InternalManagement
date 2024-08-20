@@ -163,7 +163,10 @@ class AnnoucementController extends Controller
         }
 }
     public function fetchAnnoucements(){
-        $announces = DB::table('annoucements')->whereRaw("find_in_set((".session('user')->d_id."),destination) and now() between startDate and endDate and status = 1")->get();
-        return response()->json($announces);
+        if(session(('user'))){
+                $announces = DB::table('annoucements')->whereRaw("find_in_set((".session('user')->d_id."),destination) and now() between startDate and endDate and status = 1")->get();
+                return response()->json(empty($announces)?null:$announces);
+        }
+        return response()->json(null);
     }
 }

@@ -384,7 +384,7 @@ class StockController extends BaseController
                     'name.required' => 'Please Input Name.',
                     'fr_price.required' => 'Please Input valid amount.',
                     'fr_price.required' => 'Please Input valid amount.',
-                    'type..gt:0' => 'Select Discount Type.',
+                    'type.gt:0' => 'Select Discount Type.',
                     'amount.required' => 'Please Input valid amount.',
                 ]
             );

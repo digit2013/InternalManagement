@@ -38,14 +38,9 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-     
-    
-
     </ul>
-
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -76,8 +71,6 @@
       
     </ul>
   </nav>
-
-
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -88,8 +81,6 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
- 
-
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -102,11 +93,32 @@
                 Dashboard
               </p>
             </a>
-          
+          </li>
+          <li class="nav-item menu-open">
+            <a href="/inventory-dashboard" class="nav-link ">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Inventory Dashboard
+              </p>
+            </a>
+          </li>
+          <li class="nav-item menu-open">
+            <a href="/salse-dashboard" class="nav-link ">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Sales Dashboard
+              </p>
+            </a>
+          </li>
+          <li class="nav-item menu-open">
+            <a href="/salse-dashboard" class="nav-link ">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Data Dashboard
+              </p>
+            </a>
           </li>
           @if (@session('isAdmin') == 1)
-              
-        
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-server"></i>
@@ -134,8 +146,23 @@
                   <p>Department</p>
                 </a>
               </li>
-             
-            
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Data Collection
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{url('/personal-source')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Person Collection</p>
+                </a>
+              </li>
             </ul>
           </li>
           @endsession
@@ -174,7 +201,7 @@
             <a href="/pos" class="nav-link">
               <i class="nav-icon fas fa-cart-plus fa-lg mr-2"></i>
               <p>
-                POS
+                Sale Entry
               </p>
             </a>
           </li>
@@ -237,17 +264,15 @@
             </ul>
           </li>
           @if (@session('isAdmin') == 1)
-
+          </li>
           <li class="nav-item">
-            <a href="/annoucements" class="nav-link">
-              <i class="nav-icon fas fa-bullhorn"></i>
+            <a href="/meeting-minutes" class="nav-link">
+              <i class="nav-icon nav-icon fas fa-edit"></i>
               <p>
-                Announcement
+                Meeting Minute
               </p>
             </a>
-            
           </li>
-          
           <li class="nav-item">
             <a href="/tasks" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
@@ -256,7 +281,13 @@
               </p>
             </a>
           </li>
-         
+          <li class="nav-item">
+            <a href="/annoucements" class="nav-link">
+              <i class="nav-icon fas fa-bullhorn"></i>
+              <p>
+                Announcement
+              </p>
+            </a>
           @endif
         </ul>
       </nav>

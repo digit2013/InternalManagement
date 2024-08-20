@@ -201,5 +201,18 @@ return [
 
 
     ],
+
+    'gender' =>[
+        'Male' => 1,
+        'Female' => 2,
+        'TransMale' => 3,
+        'TransFemal' => 4
+    ],
+    'material' =>[
+        'single' => 1,
+        'married' => 2,
+        'divorced' => 3,
+        'widowed' => 4
+    ]
  
 ];

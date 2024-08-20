@@ -110,4 +110,14 @@ class HomeController extends BaseController
             return view('home',compact('newTaskCount', 'pendingTaskCount','overdueTaskCount','completeTaskCount','stocks','branchCount','deptCount','minutes'))->with('helper', new help);
         }
     }
+
+    public function inventoryData(){
+
+    }
+    public function salesData(){
+        
+    }
+    public function dataCollection(){
+        
+    }
 }
