@@ -9,4 +9,9 @@ public/uploads
 public/.htaccess
 public/favicon.ico
 public/index.php
+<<<<<<< HEAD
 public/robots.txt
+=======
+public/robots.txt
+.env
+>>>>>>> 7628bfc7 (update)
