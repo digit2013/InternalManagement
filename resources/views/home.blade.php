@@ -555,8 +555,13 @@
                                                             $i = 0; ?>
                                                             @if(!empty($img))
                                                             <div class="col-12"> 
+                                                                @if(isset($img[0]->image_url))
                                                                 <img src="{{$img[0]->image_url}}"
                                                                     class="product-image" alt="Product Image">
+                                                                @else
+                                                                <img src=""
+                                                                class="product-image" alt="Product Image">
+                                                                @endif
                                                             </div>
                                                             <div class="col-12 product-image-thumbs">
                                                                 @foreach ($img as $pimg)
