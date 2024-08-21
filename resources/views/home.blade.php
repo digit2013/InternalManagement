@@ -550,7 +550,7 @@
                                                             $i = 0; ?>
                                                             @if(!empty($prod_img))
                                                             <div class="col-12">
-                                                                <img src="{{ $prod_img[0]->image_url }}"
+                                                                <img src="{{ $imgUrl }}"
                                                                     class="product-image" alt="Product Image">
                                                             </div>
                                                             <div class="col-12 product-image-thumbs">
