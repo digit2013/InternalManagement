@@ -520,7 +520,7 @@
                                             $imgUrl = '';
                                         }
                                         ?>
-                                        <img src="{{ $imgUrl}}"
+                                        <img src="{{ $img[0]->image_url}}"
                                             alt="{{ $product->name }}" class="img-circle img-size-32 mr-2">
                                         {{ $product->name }}
                                     </td>
@@ -545,16 +545,15 @@
                                                         <div class="col-12 col-sm-6">
                                                             <h3 class="d-inline-block d-sm-none">{{ $product->name }}
                                                             </h3>
-                                                            <?php $prod_img = $helper->getProductImage($product->id);
-                                                            
+                                                            <?php 
                                                             $i = 0; ?>
-                                                            @if(!empty($prod_img))
-                                                            <div class="col-12">
-                                                                <img src="{{ $imgUrl }}"
+                                                            @if(!empty($img))
+                                                            <div class="col-12"> 
+                                                                <img src="{{$img[0]->image_url}}"
                                                                     class="product-image" alt="Product Image">
                                                             </div>
                                                             <div class="col-12 product-image-thumbs">
-                                                                @foreach ($prod_img as $pimg)
+                                                                @foreach ($img as $pimg)
                                                                     @if ($i == 0)
                                                                         <div class="product-image-thumb active"><img
                                                                                 src="{{ $pimg->image_url }}"
@@ -895,7 +894,7 @@
     <script src="{{ url('orgChart/js/exporting.js') }}"></script>
     <script src="{{ url('orgChart/js/accessibility.js') }}"></script>
 
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ url('plugins/chart.js/Chart.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
@@ -1110,154 +1109,7 @@
         });
 
 
-        var pieChartCanvas = $('#taskChart').get(0).getContext('2d')
-        var data = {
-            labels: ['new', 'pending', 'complete', 'overdue'],
-            datasets: [{
-                data: [@json($newTaskCount), @json($pendingTaskCount), @json($completeTaskCount),
-                    @json($overdueTaskCount)
-                ],
-                backgroundColor: ['#00c0ef', '#f39c12', '#00a65a', '#f56954']
-            }]
-        };
-        var pieData = data;
-        var pieOptions = {
-            maintainAspectRatio: false,
-            responsive: true,
-        }
-        new Chart(pieChartCanvas, {
-            type: 'pie',
-            data: pieData,
-            options: pieOptions
-        })
-        var areaChartData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                    label: 'Digital Goods',
-                    backgroundColor: 'rgba(60,141,188,0.9)',
-                    borderColor: 'rgba(60,141,188,0.8)',
-                    pointRadius: false,
-                    pointColor: '#3b8bba',
-                    pointStrokeColor: 'rgba(60,141,188,1)',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data: [28, 48, 40, 19, 86, 27, 90]
-                },
-                {
-                    label: 'Electronics',
-                    backgroundColor: 'rgba(210, 214, 222, 1)',
-                    borderColor: 'rgba(210, 214, 222, 1)',
-                    pointRadius: false,
-                    pointColor: 'rgba(210, 214, 222, 1)',
-                    pointStrokeColor: '#c1c7d1',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(220,220,220,1)',
-                    data: [65, 59, 80, 81, 56, 55, 40]
-                },
-            ]
-        }
-        var saleData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                    label: 'Face Serum',
-                    backgroundColor: 'rgba(60,141,188,0.9)',
-                    borderColor: 'rgba(60,141,188,0.8)',
-                    pointRadius: false,
-                    pointColor: '#3b8bba',
-                    pointStrokeColor: 'rgba(60,141,188,1)',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data: [1028, 1448, 3140, 1219, 3386, 2317, 1917]
-                },
-                {
-                    label: 'Shower Gel',
-                    backgroundColor: 'rgba(77, 114, 232, 1)',
-                    borderColor: 'rgba(77, 114, 114, 1)',
-                    pointRadius: false,
-                    pointColor: 'rgba(77, 114, 114, 1)',
-                    pointStrokeColor: '#c1c7d1',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(220,320,20,1)',
-                    data: [8126, 5129, 8101, 2811, 5361, 5225, 3240]
-                },
-                {
-                    label: 'Liquid Foundation',
-                    backgroundColor: 'rgba(10, 214, 22, 1)',
-                    borderColor: 'rgba(10, 214, 22, 1)',
-                    pointRadius: false,
-                    pointColor: 'rgba(10, 214, 22, 1)',
-                    pointStrokeColor: '#c1c7d1',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(210,120,220,1)',
-                    data: [1138, 2199, 3380, 5141, 10056, 7515, 6430]
-                },
-                {
-                    label: 'Creampact Powder',
-                    backgroundColor: 'rgba(210, 214, 22, 1)',
-                    borderColor: 'rgba(210, 214, 22, 1)',
-                    pointRadius: false,
-                    pointColor: 'rgba(210, 214, 22, 1)',
-                    pointStrokeColor: '#c1c7d1',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(220,220,120,1)',
-                    data: [3615, 1359, 2180, 3181, 5156, 4525, 3430]
-                },
-                {
-                    label: 'Facewash',
-                    backgroundColor: 'rgba(20, 214, 222, 1)',
-                    borderColor: 'rgba(20, 214, 222, 1)',
-                    pointRadius: false,
-                    pointColor: 'rgba(20, 214, 222, 1)',
-                    pointStrokeColor: '#c1c7d1',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(220,120,220,1)',
-                    data: [1615, 2519, 3801, 4381, 5516, 6545, 7410]
-                },
-                {
-                    label: 'Lotion',
-                    backgroundColor: 'rgba(221, 111, 123, 1)',
-                    borderColor: 'rgba(221, 111, 123, 1)',
-                    pointRadius: false,
-                    pointColor: 'rgba(221, 111, 123, 1)',
-                    pointStrokeColor: '#c1c7d1',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(120,220,220,1)',
-                    data: [1465, 2259, 3810, 1281, 1561, 8229, 1140]
-                },
-
-            ]
-        }
-
-
-        var stackedBarChartCanvas = $('#saleChart').get(0).getContext('2d')
-        var stackedBarChartData = $.extend(true, {}, saleData)
-        stackedBarChartData.datasets[0] = saleData.datasets[0]
-        stackedBarChartData.datasets[1] = saleData.datasets[1]
-        stackedBarChartData.datasets[2] = saleData.datasets[2]
-        stackedBarChartData.datasets[3] = saleData.datasets[3]
-        stackedBarChartData.datasets[4] = saleData.datasets[4]
-        stackedBarChartData.datasets[5] = saleData.datasets[5]
-
-
-
-        var stackedBarChartOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                xAxes: [{
-                    stacked: true,
-                }],
-                yAxes: [{
-                    stacked: true
-                }]
-            }
-        }
-
-        new Chart(stackedBarChartCanvas, {
-            type: 'bar',
-            data: stackedBarChartData,
-            options: stackedBarChartOptions
-        })
+    
 
         $(document).ready(function() {
 
@@ -1270,5 +1122,4 @@
         })
     </script>
 </section>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 @endsection
