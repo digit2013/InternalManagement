@@ -546,8 +546,9 @@
                                                             <h3 class="d-inline-block d-sm-none">{{ $product->name }}
                                                             </h3>
                                                             <?php $prod_img = $helper->getProductImage($product->id);
+                                                            
                                                             $i = 0; ?>
-
+                                                            @if(!empty($prod_img))
                                                             <div class="col-12">
                                                                 <img src="{{ $prod_img[0]->image_url }}"
                                                                     class="product-image" alt="Product Image">
@@ -566,6 +567,7 @@
                                                                     <?php $i++; ?>
                                                                 @endforeach
                                                             </div>
+                                                            @endif
                                                         </div>
                                                         <div class="col-12 col-sm-6">
                                                             <h3 class="my-3">{{ $product->name }}</h3>
