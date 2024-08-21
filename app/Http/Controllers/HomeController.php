@@ -29,33 +29,54 @@ use App\Models\User;
 use App\Models\Stock;
 use App\Models\Invoice;
 use App\Models\MeetingMinute;
-
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Collection;
 class help
 {
-    public static function getStock(){
 
+    public static function getCategoryPerProducts()
+    {
+        return  DB::select('SELECT A.name, CASE WHEN B.products is null THEN 0 ELSE B.products END as products FROM orgmgmt.categories as A
+left join (select c_id , count(1) as products from products group by c_id) B on A.id = B.c_id;');
     }
-    public static function getPrice($price_type,$stock_id){
-        return DB::table('prices')->where('stock_id',$stock_id)->where('price_type',$price_type)->get();
+
+    public static function getTopRole()
+    {
+        return DB::table('roles')->where('parent', 0)->get();
+    }
+    public static function getChildRole($id)
+    {
+        return DB::table('roles')->where('parent', $id)->get();
+    }
+    public static function getPrice($price_type, $stock_id)
+    {
+        return DB::table('prices')->where('stock_id', $stock_id)->where('price_type', $price_type)->get();
     }
     public static function getProductImage($p_id)
     {
         return DB::table('product_images')->where('p_id', $p_id)->get();
     }
-    public static function getTopWidget(){
-        if(Session::get('isAdmin')==1){
-            $userCount = User::where('status',1)->count();
-        }else{
-            $userCount = User::where('d_id',Session::get('user')->d_id)->count();
+    public static function getTopWidget()
+    {
+        if (Session::get('isAdmin') == 1) {
+            $userCount = User::where('status', 1)->count();
+        } else {
+            $userCount = User::where('d_id', Session::get('user')->d_id)->count();
         }
-        $overdueTaskCount = TaskDetail::where('status',3)->where('u_id',Session::get('user')->id)->count();
-        $pendingTaskCount = TaskDetail::where('status',2)->where('u_id',Session::get('user')->id)->count();
-        $newTaskCount = TaskDetail::where('status',1)->where('u_id',Session::get('user')->id)->count();
-        $completeTaskCount = TaskDetail::where('status',4)->where('u_id',Session::get('user')->id)->count();
+        $overdueTaskCount = TaskDetail::where('status', 3)->where('u_id', Session::get('user')->id)->count();
+        $pendingTaskCount = TaskDetail::where('status', 2)->where('u_id', Session::get('user')->id)->count();
+        $newTaskCount = TaskDetail::where('status', 1)->where('u_id', Session::get('user')->id)->count();
+        $completeTaskCount = TaskDetail::where('status', 4)->where('u_id', Session::get('user')->id)->count();
 
-        $productCount = Product::where('status',1)->count();
-        return array(['userCount'=>$userCount,'productCount'=>$productCount,'overdueTaskCount'=>$overdueTaskCount,'pendingTaskCount'=>$pendingTaskCount,
-    'newTaskCount'=>$newTaskCount,'completeTaskCount'=>$completeTaskCount]);
+        $productCount = Product::where('status', 1)->count();
+        return array([
+            'userCount' => $userCount,
+            'productCount' => $productCount,
+            'overdueTaskCount' => $overdueTaskCount,
+            'pendingTaskCount' => $pendingTaskCount,
+            'newTaskCount' => $newTaskCount,
+            'completeTaskCount' => $completeTaskCount
+        ]);
     }
     public static function getFileList($t_id)
     {
@@ -89,35 +110,63 @@ class help
 class HomeController extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
+    public function dataCollection()
+    {
+
+        $persons = DB::table('person')->get();
+        $comesticsRaw = File::json('comestic/comestic.json');
+        $categories = [];
+        $brands = [];
+        $i=0;$j=0;
+        $brandBase = [];
+        $cateBase = [];
+        foreach(collect($comesticsRaw)->groupBy('Category') as $c => $cate){
+            $categories[]=$c;
+        }
+        $comesticsByBrand = collect($comesticsRaw)->groupBy('Brand');
+        foreach($comesticsByBrand as $b => $brand){
+            $brands[]=$b;
+            $cateBase[$j]['name']=$b;
+            $data = [];
+            foreach($categories as $c){
+                $data []= collect($brand)->where('Category',$c)->count();
+            }
+            $cateBase[$j]['data']=$data;
+            $j++;
+        }
+        $comesticsByCate = collect($comesticsRaw)->groupBy('Category');
+        foreach($comesticsByCate as $c => $cate){
+            $brandBase[$i]['name']=$c;
+            $data = [];
+            foreach($brands as $b){
+                $data []= collect($cate)->where('Brand',$b)->count();
+            }
+            $brandBase[$i]['data']=$data;
+            $i++;
+        }
+     
+        return view('data-collection', compact('persons', 'brandBase','categories','brands','cateBase'))->with('helper', new help);
+    }
     public function home()
     {
         if (Session::get('user') == null) {
             return view('login');
         } else {
-            $branchCount = Branch::where('status',1)->count();
-            $deptCount = Department::where('status',1)->count();
+            $branchCount = Branch::where('status', 1)->count();
+            $deptCount = Department::where('status', 1)->count();
             $minutes = MeetingMinute::get();
-            $overdueTaskCount = TaskDetail::where('status',3)->where('u_id',Session::get('user')->id)->count();
-            $pendingTaskCount = TaskDetail::where('status',2)->where('u_id',Session::get('user')->id)->count();
-            $newTaskCount = TaskDetail::where('status',1)->where('u_id',Session::get('user')->id)->count();
-            $completeTaskCount = TaskDetail::where('status',4)->where('u_id',Session::get('user')->id)->count();
-            $stocks = DB::table('products')
-            ->join('stocks', 'stocks.product_id', '=', 'products.id')
-            ->join('categories', 'categories.id', '=', 'products.c_id')
-            ->join('branchs', 'branchs.id', '=', 'stocks.warehouse_id')
-            ->select('products.id', 'products.name','stocks.id as sid', 'products.description','stocks.qty as sqty','stocks.warehouse_id as qbid','branchs.name as swarehouse','categories.name as cname')->get();
+            $overdueTaskCount = TaskDetail::where('status', 3)->where('u_id', Session::get('user')->id)->count();
+            $pendingTaskCount = TaskDetail::where('status', 2)->where('u_id', Session::get('user')->id)->count();
+            $newTaskCount = TaskDetail::where('status', 1)->where('u_id', Session::get('user')->id)->count();
+            $completeTaskCount = TaskDetail::where('status', 4)->where('u_id', Session::get('user')->id)->count();
+            $products = DB::table('products')
+                ->join('categories', 'categories.id', '=', 'products.c_id')
+                ->select('products.id', 'products.name', 'products.description', 'categories.name as cname')->get();
 
-            return view('home',compact('newTaskCount', 'pendingTaskCount','overdueTaskCount','completeTaskCount','stocks','branchCount','deptCount','minutes'))->with('helper', new help);
+            return view('home', compact('newTaskCount', 'pendingTaskCount', 'overdueTaskCount', 'completeTaskCount', 'products', 'branchCount', 'deptCount', 'minutes'))->with('helper', new help);
         }
     }
 
-    public function inventoryData(){
-
-    }
-    public function salesData(){
-        
-    }
-    public function dataCollection(){
-        
-    }
+    public function inventoryData() {}
+    public function salesData() {}
 }
