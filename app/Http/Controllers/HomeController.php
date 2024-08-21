@@ -36,7 +36,7 @@ class help
 
     public static function getCategoryPerProducts()
     {
-        return  DB::select('SELECT A.name, CASE WHEN B.products is null THEN 0 ELSE B.products END as products FROM orgmgmt.categories as A
+        return  DB::select('SELECT A.name, CASE WHEN B.products is null THEN 0 ELSE B.products END as products FROM categories as A
 left join (select c_id , count(1) as products from products group by c_id) B on A.id = B.c_id;');
     }
 
