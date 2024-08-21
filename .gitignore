@@ -3,6 +3,7 @@ storage/
 node_modules/
 public/dist
 public/images
+.env
 public/plugins
 public/products
 public/uploads

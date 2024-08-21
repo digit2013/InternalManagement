@@ -512,7 +512,15 @@
                             @foreach ($products as $product)
                                 <tr>
                                     <td>
-                                        <img src="{{ $helper->getProductImage($product->id)[0]->image_url }}"
+                                        <?php $img = $helper->getProductImage($product->id);
+                                        if(!empty($imgUrl)){
+                                            $imgUrl = $img[0]->image_url;
+                                        }
+                                        else{
+                                            $imgUrl = '';
+                                        }
+                                        ?>
+                                        <img src="{{ $imgUrl}}"
                                             alt="{{ $product->name }}" class="img-circle img-size-32 mr-2">
                                         {{ $product->name }}
                                     </td>
