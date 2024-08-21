@@ -520,8 +520,14 @@
                                             $imgUrl = '';
                                         }
                                         ?>
+                                        @if(isset($img[0]->image_url))
                                         <img src="{{ $img[0]->image_url}}"
                                             alt="{{ $product->name }}" class="img-circle img-size-32 mr-2">
+                                        @else
+                                        <img src=""
+                                        alt="{{ $product->name }}" class="img-circle img-size-32 mr-2">
+                                        @endif
+
                                         {{ $product->name }}
                                     </td>
                                     <td>
