@@ -836,7 +836,7 @@
 
                 #orgChartContainer h4 {
                     text-transform: none;
-                    font-size: 12px;
+                    font-size: 10px;
                     font-weight: normal;
                     font-weight: bold;
                 }
@@ -1047,7 +1047,7 @@
                     ['Head of Operations', 'Sales & Marketing Manager'],
                     ['Head of Operations', 'Admin Manager'],
                     ['Head of Business', 'Business Development Manager'],
-                    ['Head of IT', 'IT  Manager'],
+                    ['Head of IT', 'IT Manager'],
                     ['Senior Finance Manager', 'Finance Manager'],
                     ['Finance Manager', 'Finance Controller'],
                     ['Finance Manager', 'Internal Auditor'],
