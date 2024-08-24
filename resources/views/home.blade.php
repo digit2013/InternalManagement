@@ -551,7 +551,7 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="card-body" style="height:auto;">
+                                                <div class="card-body" style="max-height: fit-content;">
                                                     <div class="row">
                                                         <div class="col-12 col-sm-6">
                                                             <h3 class="d-inline-block d-sm-none">{{ $product->name }}
