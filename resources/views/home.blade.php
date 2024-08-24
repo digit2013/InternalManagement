@@ -551,7 +551,7 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="card-body">
+                                                <div class="card-body" style="height:auto;">
                                                     <div class="row">
                                                         <div class="col-12 col-sm-6">
                                                             <h3 class="d-inline-block d-sm-none">{{ $product->name }}
@@ -562,7 +562,7 @@
                                                             <div class="col-12"> 
                                                                 @if(isset($img[0]->image_url))
                                                                 <img src="{{$img[0]->image_url}}"
-                                                                    class="product-image" alt="Product Image">
+                                                                    class="product-image" alt="Product Image" style="border-radius: 20px">
                                                                 @else
                                                                 <img src=""
                                                                 class="product-image" alt="Product Image">
@@ -573,11 +573,11 @@
                                                                     @if ($i == 0)
                                                                         <div class="product-image-thumb active"><img
                                                                                 src="{{ $pimg->image_url }}"
-                                                                                alt="{{ $product->name }}"></div>
+                                                                                alt="{{ $product->name }}" style="border-radius: 20px"></div>
                                                                     @else
                                                                         <div class="product-image-thumb "><img
                                                                                 src="{{ $pimg->image_url }}"
-                                                                                alt="{{ $product->name }}"></div>
+                                                                                alt="{{ $product->name }}" style="border-radius: 20px"></div>
                                                                     @endif
                                                                     <?php $i++; ?>
                                                                 @endforeach
@@ -1070,13 +1070,15 @@
                     ['Business Development Manager', 'Business Development Officer'],
                     ['Business Development Manager', 'Business Strategy Officer'],
                     ['Business Development Manager', 'Business Risk Officer'],
-                    ['Head of IT', 'Assistant  Manager (IT Operations)'],
-                    ['Head of IT', 'Assistant  Manager (Application Support)'],
-                    ['Assistant  Manager (IT Operations)', 'Sr Network Engineer'],
-                    ['Assistant  Manager (IT Operations)', 'Network Engineer'],
-                    ['Assistant  Manager (IT Operations)',
-                        'Associated System & Network Support Engineer'
-                    ],
+                    ['IT Manager', 'Assistant Manager(IT Operations)'],
+                    ['IT Manager', 'Assistant Manager(Application Support)'],
+                    ['Assistant Manager(IT Operations)', 'Sr Network Engineer'],
+                    ['Assistant Manager(IT Operations)', 'Network Engineer'],
+                    ['Assistant Manager(IT Operations)','Associated System & Network Support Engineer'],
+                    ['Assistant Manager(Application Support)', 'Senior Application Support Executive'],
+                    ['Assistant Manager(Application Support)', 'Senior Application Support Officer'],
+                    ['Assistant Manager(Application Support)',' Application Support Officer'],
+                    ['Assistant Manager(Application Support)','Databased Administrator'],
 
                 ],
                 levels: [{
